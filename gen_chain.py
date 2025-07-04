@@ -114,7 +114,7 @@ def run_consensus():
         "--min-sync-peers=0 "
         "--verbosity=info "
         "--slots-per-archive-point=32 "
-        f"--suggested-fee-recipient=0x8943545177806ED17B9F23F0a21ee5948eCaa776 "
+        f"--suggested-fee-recipient={vc_suggested_fee_recipient} "
         "--jwt-secret=/data/jwt/jwtsecret "
         "--disable-monitoring=false "
         "--monitoring-host=0.0.0.0 "
@@ -165,7 +165,7 @@ def run_validators():
     command = (
         f"--accept-terms-of-use=true "
         f"--chain-config-file=/data/network-configs/config.yaml "
-        f"--suggested-fee-recipient=0x8943545177806ED17B9F23F0a21ee5948eCaa776 "
+        f"--suggested-fee-recipient={vc_suggested_fee_recipient} "
         f"--beacon-rpc-provider={vc_rpc} "
         f"--beacon-rest-api-provider={vc_rest} "
         f"--disable-monitoring=false "
