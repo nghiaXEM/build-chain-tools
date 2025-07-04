@@ -1,0 +1,5 @@
+mnemonic: ${EL_AND_CL_MNEMONIC}
+el_premines:
+  "m/44'/60'/0'/0/0": 777ETH
+el_premine_addrs: ${EL_PREMINE_ADDRS}
+additional_preloaded_contracts: ${ADDITIONAL_PRELOADED_CONTRACTS}

@@ -4,18 +4,19 @@ import getpass
 import shutil
 
 def is_valid_mnemonic(mnemonic):
-    return len(mnemonic.strip().split()) == 24
+    word_count = len(mnemonic.strip().split())
+    return word_count in [12, 24]
 
 def is_valid_password(pw):
     return len(pw.encode("utf-8")) > 32
 
-def main():
+def gen_validators(PWD):
     # --- Nhập mnemonic ---
     while True:
-        mnemonic = input("📥 Nhập mnemonic (24 từ cách nhau bằng dấu cách): ").strip()
+        mnemonic = input("📥 Nhập mnemonic (12 hoặc 24 từ cách nhau bằng dấu cách): ").strip()
         if is_valid_mnemonic(mnemonic):
             break
-        print("❌ Mnemonic phải có đúng 24 từ. Vui lòng nhập lại.")
+        print("❌ Mnemonic phải có đúng 12 hoặc 24 từ. Vui lòng nhập lại.")
 
     # --- Nhập chỉ số ---
     while True:
@@ -40,7 +41,7 @@ def main():
     client = docker.from_env()
 
     # Thư mục mount ra ngoài
-    validator_output_path = os.path.abspath("validators")
+    validator_output_path = f"{PWD}/data/validators"
     os.makedirs(validator_output_path, exist_ok=True)
 
     # Câu lệnh val-tools
@@ -51,7 +52,7 @@ def main():
         f"--source-min={start} "
         f"--source-max={end} "
         f"--source-mnemonic='{mnemonic}' "
-	f"--out-loc=/data/validator-keys"
+	    f"--out-loc=/data/validator-keys"
     )
 
     print("\n📦 Đang chạy lệnh:")
@@ -79,13 +80,10 @@ def main():
     print("✅ Validator keystore đã được tạo tại thư mục `validator-keys/prysm/`.")
 
     # --- Ghi mật khẩu ra file ---
-    prysm_password_dir = os.path.abspath("./validators/prysm-password")
+    prysm_password_dir = f"{PWD}/data/validators/prysm-password"
     os.makedirs(prysm_password_dir, exist_ok=True)
     password_path = os.path.join(prysm_password_dir, "prysm-password.txt")
     with open(password_path, "w") as f:
         f.write(password.strip())
 
     print(f"🔐 Đã lưu mật khẩu tại `{password_path}`.")
-
-if __name__ == "__main__":
-    main()
