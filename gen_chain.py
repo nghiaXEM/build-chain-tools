@@ -52,6 +52,7 @@ def run_execution():
         f"--nat=extip:{server_ip} "
         f"--authrpc.port={el_authrpc} --authrpc.addr=0.0.0.0 --authrpc.vhosts=* --authrpc.jwtsecret=/data/jwt/jwtsecret "
         f"--syncmode=full "
+        f"--gcmode=archive "
         f"--rpc.allow-unprotected-txs "
         f"--metrics --metrics.addr=0.0.0.0 --metrics.port={el_metrics_port} "
         f"--discovery.port={el_p2p_port} --port={el_p2p_port} "
